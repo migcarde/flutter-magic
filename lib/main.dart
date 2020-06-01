@@ -1,5 +1,6 @@
 import 'package:alimentacion/common/theme.dart';
 import 'package:alimentacion/screens/cardDetail.dart';
+import 'package:alimentacion/screens/pictureDetail.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
         theme: appTheme,
         initialRoute: '/',
         routes: {
-          '/': (context) => CardDetail()
+          '/': (context) => PictureDetail()
         }
       );
   }

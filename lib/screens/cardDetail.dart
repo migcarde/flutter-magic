@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:alimentacion/services/authorService.dart';
 
+import '../models/CardDTO.dart';
+import '../models/CardDTO.dart';
+import '../models/CardDTO.dart';
+
 class CardDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,13 +28,59 @@ class Example extends StatefulWidget {
 class _ExampleState extends State<Example> {
   Future<List<CardDTO>> prueba = fechtCards(0);
   CardDTO _card = CardDTO();
+  List<CardDTO> _cards = List();
 
   _ExampleState() {
-    fechtCards(0).then((value) => _card = value.first);
+    prueba = fechtCards(0);
+    fechtCards(0).then((value) => _cards = value);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    return FutureBuilder<List<CardDTO>>(
+      future: prueba,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return cardContainer(snapshot.data[0]);
+        } else {
+          return Text("Ha ocurrido un error");
+        }
+      },
+    );
+
+    // return Scaffold(
+    //   body: Container(
+    //     child: ListView.builder(
+    //       scrollDirection: Axis.vertical,
+    //       shrinkWrap: true,
+    //       itemCount: _cards.length,
+    //       itemBuilder: (BuildContext context, int index) {
+    //         cardContainer(_cards[index]);
+    //       },
+    //     ),
+    //   ),
+    // );
+  }
+
+  List<Widget> _printButtons(List<String> colors) {
+    List<Widget> result = List();
+    for (var color in colors) {
+      result.add(Container(
+        margin: EdgeInsets.only(top: 10, right: 5, left: 5),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.all(Radius.circular(20))
+        ),
+        child: Text(color),
+      ));
+    }
+
+    return result;
+  }
+
+  Container cardContainer(CardDTO card) {
     return Container(
         color: Colors.blueGrey,
         child: Row(
@@ -57,7 +107,7 @@ class _ExampleState extends State<Example> {
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
-                        _card.text,
+                        _card.artist,
                       ),
                     ),
 
@@ -70,35 +120,6 @@ class _ExampleState extends State<Example> {
             )
           ],
         ));
-  }
-
-  List<Widget> _printButtons(List<String> colors) {
-    List<Widget> result = List();
-    for (var color in colors) {
-      // result.add(MaterialButton(
-      //     onPressed: () => SnackBar(content: Text("Hello")),
-      //     color: Colors.white,
-          
-      //     child: Text(color)));
-      result.add(Container(
-        margin: EdgeInsets.only(top: 10, right: 5, left: 5),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        decoration: BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.all(Radius.circular(20))
-        ),
-        child: Text(color),
-      ));
-    }
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-    // result.add(Flexible(child: Text("Hello")));
-
-    return result;
   }
 }
 
