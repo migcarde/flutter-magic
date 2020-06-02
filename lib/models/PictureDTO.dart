@@ -15,10 +15,10 @@ class PictureDto {
     this.downloadUrl,
   });
 
-  factory PictureDto.fromJson(dynamic json) {
+  factory PictureDto.fromJson(Map<String, dynamic> json) {
     return PictureDto(
         author: json['author'] as String,
-        downloadUrl: json['downloadUrl'] as String,
+        downloadUrl: json['download_url'] as String,
         height: json['height'] as int,
         id: json['id'] as String,
         url: json['url'] as String,

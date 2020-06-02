@@ -8,7 +8,8 @@ Future<List<PictureDto>> fetchPictures(int page) async {
       await http.get('https://picsum.photos/v2/list?page=$page&limit=5');
 
   if (response.statusCode == 200) {
-    var result = json.decode(response.body).cast<PictureDto>();
+    var parsedJson = json.decode(response.body).cast<Map<String, dynamic>>();
+    var result = parsedJson.map<PictureDto>((json) => PictureDto.fromJson(json)).toList();
 
     return result;
   } else {
