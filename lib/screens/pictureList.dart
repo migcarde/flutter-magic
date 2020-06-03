@@ -2,6 +2,7 @@ import 'package:alimentacion/models/pictureDTO.dart';
 import 'package:alimentacion/services/pictureService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class PictureList extends StatelessWidget {
   @override
@@ -12,6 +13,14 @@ class PictureList extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
       ),
       body: Picture(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.access_time), title: Text('Prueba')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Prueba'))
+        ],
+        backgroundColor: Colors.blueAccent,
+        selectedItemColor: Colors.white,
+      ),
     );
   }
 }
@@ -50,9 +59,11 @@ Widget listView(List<PictureDto> list) {
       PictureDto picture = list[index];
       return Column(
         children: <Widget>[
-          FadeInImage.assetNetwork(
-              placeholder: '../assets/loading.gif',
-              image: picture.downloadUrl),
+          FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: picture.downloadUrl,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,),
           Text(picture.author)
         ],
       );
